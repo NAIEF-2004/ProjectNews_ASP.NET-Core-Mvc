@@ -10,7 +10,7 @@ namespace ProjectNews_ASP.NET_Core_Mvc
 
 			var builder = WebApplication.CreateBuilder(args);
 
-
+			 
 
 			// Add services to the container.
 

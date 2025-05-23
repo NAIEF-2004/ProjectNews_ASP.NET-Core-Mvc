@@ -857,7 +857,8 @@ section,
 }
 
 .hero .container {
-  background: color-mix(in srgb, var(--surface-color), transparent 10%);
+  background: rgba(100,100,100,0.6);
+  color:white;
   position: relative;
   text-align: center;
   padding-top: 30px;
@@ -875,6 +876,7 @@ section,
 }
 
 .hero h2 {
+    color:wheat;
   margin-bottom: 20px;
   font-size: 36px;
   font-weight: 700;
