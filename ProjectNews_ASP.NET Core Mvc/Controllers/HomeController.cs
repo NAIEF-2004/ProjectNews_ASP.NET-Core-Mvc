@@ -1,4 +1,4 @@
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using ProjectNews_ASP.NET_Core_Mvc.Models;
 using System.Diagnostics;
 
@@ -6,16 +6,20 @@ namespace ProjectNews_ASP.NET_Core_Mvc.Controllers
 {
 	public class HomeController : Controller
 	{
-		private readonly ILogger<HomeController> _logger;
+	
+        NewsContext db;
+        private readonly ILogger<HomeController> _logger;
 
-		public HomeController(ILogger<HomeController> logger)
+		public HomeController(ILogger<HomeController> logger,NewsContext context)
 		{
-			_logger = logger;
+            db = context;
+           _logger = logger;
 		}
 
 		public IActionResult Index()
 		{
-			return View();
+		    var result=db.Categorys.ToList(); //جلب البيانات  من القاعدة كقائمة
+            return View(result);
 		}
 
 		public IActionResult Privacy()

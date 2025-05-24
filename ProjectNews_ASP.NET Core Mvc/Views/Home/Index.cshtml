@@ -2,7 +2,30 @@
     ViewData["Title"] = "Home Page";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
-</div>
+<!-- Featured Services Section -->
+<section id="featured-services" class="featured-services section">
+
+    <div class="container">
+        <div class="row gy-4">
+        @foreach (var item in Model)
+        {
+            <div class="col-xl-3 col-md-6 d-flex" data-aos="fade-up" data-aos-delay="100">
+                <div class="service-item position-relative" style="width:100%">
+                    <div class="icon"><i class="fas fa-heartbeat icon"></i></div>
+                    <h4><a href="" class="stretched-link">@item.Name</a></h4>
+                    <p>@item.Description</p>
+                </div>
+            </div>
+
+            <!-- End Service Item -->
+        }
+        </div>
+      
+
+
+
+    
+
+    </div>
+
+</section><!-- /Featured Services Section -->

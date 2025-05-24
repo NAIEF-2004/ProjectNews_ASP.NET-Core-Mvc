@@ -4,7 +4,7 @@
 	{ 
         public int Id { get; set; }
 		public string Name { get; set; } //اسم الخبر
-		public int Description { get; set; }
+		public string Description { get; set; }
 		public List<News> Mylist { get; set; }
 	}
 }
