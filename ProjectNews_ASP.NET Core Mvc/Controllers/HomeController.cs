@@ -21,8 +21,13 @@ namespace ProjectNews_ASP.NET_Core_Mvc.Controllers
 		    var result=db.Categorys.ToList(); //جلب البيانات  من القاعدة كقائمة
             return View(result);
 		}
+        public IActionResult Contact()
+        {
+        
+            return View();
+        }
 
-		public IActionResult Privacy()
+        public IActionResult Privacy()
 		{
 			return View();
 		}
