@@ -5,6 +5,7 @@
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
     <RootNamespace>ProjectNews_ASP.NET_Core_Mvc</RootNamespace>
+    <UserSecretsId>b3d3d53f-21e4-4e93-b27b-45140aa22fe1</UserSecretsId>
   </PropertyGroup>
 
   <ItemGroup>
