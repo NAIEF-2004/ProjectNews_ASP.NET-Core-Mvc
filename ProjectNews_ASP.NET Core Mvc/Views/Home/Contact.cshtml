@@ -1,35 +1,25 @@
-﻿<div class="container" style="margin-top:25px;margin-bottom:25px">
-<div class="col-sm-10">
+﻿@model ProjectNews_ASP.NET_Core_Mvc.Models.ContactUs
 
-
-
-
-<form  method="post" class="php-email-form aos-init aos-animate" data-aos="fade-up" data-aos-delay="500">
-    <div class="row gy-4">
-
-        <div class="col-md-6">
-            <input type="text" name="name" class="form-control" placeholder="Your Name" required="">
-        </div>
-
-        <div class="col-md-6 ">
-            <input type="email" class="form-control" name="email" placeholder="Your Email" required="">
-        </div>
-
-        <div class="col-md-12">
-            <input type="text" class="form-control" name="subject" placeholder="Subject" required="">
-        </div>
-
-        <div class="col-md-12">
-            <textarea class="form-control" name="message" rows="4" placeholder="Message" required=""></textarea>
-        </div>
-
-        <div >
-           
-
-            <button class="btn btn-success" type="submit">Send Message</button>
-        </div>
-
+<div class="container" style="margin-top:25px;margin-bottom:25px">
+    <div class="col-sm-10">
+        <form asp-controller="Home" asp-action="SaveContact" method="post" data-aos="fade-up" data-aos-delay="50">
+            <div class="row gy-4">
+                <div class="col-md-6">
+                    <input type="text" asp-for="Name" class="form-control" placeholder="Your Name" required="">
+                </div>
+                <div class="col-md-6 ">
+                    <input type="email" class="form-control" asp-for="Email" placeholder="Your Email" required="">
+                </div>
+                <div class="col-md-12">
+                    <input type="text" class="form-control" asp-for="Subject" placeholder="Subject" required="">
+                </div>
+                <div class="col-md-12">
+                    <textarea class="form-control" asp-for="Message" rows="4" placeholder="Message" required=""></textarea>
+                </div>
+                <div>
+                    <button class="btn btn-success" type="submit">Send Message</button>
+                </div>
+            </div>
+        </form>
     </div>
-</form>
-</div>
 </div>
