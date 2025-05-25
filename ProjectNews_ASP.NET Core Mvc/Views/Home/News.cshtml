@@ -1,0 +1,37 @@
+﻿@model List<News>
+<section id="about" class="about section">
+
+    <!-- Section Title -->
+    <div class="container section-title aos-init aos-animate" data-aos="fade-up">
+        <h2>الأخبار<br></h2>
+      
+    </div><!-- End Section Title -->
+
+    <div class="container">
+        <center>        
+            @foreach (var item in Model)
+            {
+                <div class="row gy-4" style="margin:300px">
+                <div class=" col-12">
+                    <img src="~/assets/img/about.jpg" class="img-fluid" style="height:200;width:200 ;border-radius:50%" alt="">
+                  
+                </div>
+                <div class="col-sm-12">
+                    <h3>@item.Title</h3>
+                    <h4>@item.Data</h4>
+                <p class="fst-italic">
+                  @item.Topic
+                </p>
+               
+               
+            </div>
+                </div>
+            <hr />
+            }
+       
+        </center>
+
+
+    </div>
+
+</section>

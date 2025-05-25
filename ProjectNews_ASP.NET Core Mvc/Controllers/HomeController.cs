@@ -21,6 +21,11 @@ namespace ProjectNews_ASP.NET_Core_Mvc.Controllers
 		    var result=db.Categorys.ToList(); //جلب البيانات  من القاعدة كقائمة
             return View(result);
 		}
+        public IActionResult News(int id)
+        {
+          var result= db.News.Where(x => x.CategoryId == id).OrderByDescending(x=>x.Data).ToList(); //جلب البيانات من القاعدة حسب التصنيف المحدد
+            return View(result);
+        }
 
         public IActionResult Massages() //اضفت هذه الدالة لعرض الرسائل
         {

@@ -10,14 +10,20 @@
         <div class="row gy-4">
         @foreach (var item in Model)
         {
+               
             <div class="col-xl-3 col-md-6 d-flex" data-aos="fade-up" data-aos-delay="100">
+                    <a href="/Home/News/@item.Id">
                 <div class="service-item position-relative" style="width:100%">
                     <div class="icon"><i class="fas fa-heartbeat icon"></i></div>
-                    <h4><a href="" class="stretched-link">@item.Name</a></h4>
-                    <p>@item.Description</p>
+                            <h4 class="title"><a href="/Home/News/@item.Id" class="stretched-link">@item.Name</a></h4>
+                    <p class="description">@item.Description</p>
+                    
+                       
+                 
                 </div>
+                    </a>
             </div>
-
+            
             <!-- End Service Item -->
         }
         </div>
