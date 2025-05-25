@@ -23,16 +23,28 @@ namespace ProjectNews_ASP.NET_Core_Mvc.Controllers
 		}
         public IActionResult News(int id)
         {
-          var result= db.News.Where(x => x.CategoryId == id).OrderByDescending(x=>x.Data).ToList(); //جلب البيانات من القاعدة حسب التصنيف المحدد
+            Category c =  db.Categorys.Find(id); //جلب التصنيف من القاعدة حسب المعرف
+            ViewData["CategoryName"] = c.Name; //إرسال اسم التصنيف إلى العرض
+
+            var result= db.News.Where(x => x.CategoryId == id).OrderByDescending(x=>x.Data).ToList(); //جلب البيانات من القاعدة حسب التصنيف المحدد
             return View(result);
         }
 
         public IActionResult Massages() //اضفت هذه الدالة لعرض الرسائل
         {
+
           var massages= db.ContactUs.ToList();
             return View(massages);
        
         }
+        public IActionResult DeleteNews(int id)
+        {
+            var News = db.News.Find(id); //جلب الخبر من القاعدة حسب المعرف
+            db.News.Remove(News); //حذف الخبر من القاعدة
+            db.SaveChanges(); //حفظ التغييرات في القاعدة
+            return RedirectToAction("Index"); //إعادة التوجيه إلى الصفحة الرئيسية
+        }
+
 
         public IActionResult Contact()
         {

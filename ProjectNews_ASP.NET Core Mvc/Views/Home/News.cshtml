@@ -3,11 +3,12 @@
 
     <!-- Section Title -->
     <div class="container section-title aos-init aos-animate" data-aos="fade-up">
-        <h2>الأخبار<br></h2>
+        <h2>الأخبار @ViewData["CategoryName"]<br></h2>
       
     </div><!-- End Section Title -->
 
     <div class="container">
+        
         <center>        
             @foreach (var item in Model)
             {
@@ -25,12 +26,16 @@
                
                
             </div>
+
                 </div>
+                <center>
+                    <a class="btn btn-danger" href="/Home/DeleteNews/@item.Id">Delete</a>
+                </center>
             <hr />
             }
        
         </center>
-
+        
 
     </div>
 
