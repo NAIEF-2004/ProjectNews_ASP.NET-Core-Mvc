@@ -21,7 +21,14 @@ namespace ProjectNews_ASP.NET_Core_Mvc.Controllers
 		    var result=db.Categorys.ToList(); //جلب البيانات  من القاعدة كقائمة
             return View(result);
 		}
-		
+
+        public IActionResult Massages() //اضفت هذه الدالة لعرض الرسائل
+        {
+          var massages= db.ContactUs.ToList();
+            return View(massages);
+       
+        }
+
         public IActionResult Contact()
         {
         
