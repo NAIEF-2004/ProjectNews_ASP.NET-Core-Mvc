@@ -18,12 +18,22 @@ namespace ProjectNews_ASP.NET_Core_Mvc.Controllers
 
 		public IActionResult Index()
 		{
-		    var result=db.Categorys.ToList(); //جلب البيانات  من القاعدة كقائمة
-            return View(result);
+            try
+            {
+                var result = db.Categorys.ToList();
+                return View(result);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error ");
+                return View("Error");
+            }
+            //جلب البيانات  من القاعدة كقائمة
+           
 		}
         public IActionResult News(int id)
         {
-            Category c =  db.Categorys.Find(id); //جلب التصنيف من القاعدة حسب المعرف
+            Category c = db.Categorys.Find(id); //جلب التصنيف من القاعدة حسب المعرف
             ViewData["CategoryName"] = c.Name; //إرسال اسم التصنيف إلى العرض
 
             var result= db.News.Where(x => x.CategoryId == id).OrderByDescending(x=>x.Data).ToList(); //جلب البيانات من القاعدة حسب التصنيف المحدد

@@ -47,7 +47,7 @@ namespace ProjectNews_ASP.NET_Core_Mvc.Controllers
         // GET: News/Create
         public IActionResult Create()
         {
-            ViewData["CategoryId"] = new SelectList(_context.Categorys, "Id", "Id");
+            ViewData["CategoryId"] = new SelectList(_context.Categorys, "Id", "Name");
             return View();
         }
 
@@ -64,7 +64,7 @@ namespace ProjectNews_ASP.NET_Core_Mvc.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["CategoryId"] = new SelectList(_context.Categorys, "Id", "Id", news.CategoryId);
+            ViewData["CategoryId"] = new SelectList(_context.Categorys, "Id", "Name", news.CategoryId);
             return View(news);
         }
 
@@ -81,7 +81,7 @@ namespace ProjectNews_ASP.NET_Core_Mvc.Controllers
             {
                 return NotFound();
             }
-            ViewData["CategoryId"] = new SelectList(_context.Categorys, "Id", "Id", news.CategoryId);
+            ViewData["CategoryId"] = new SelectList(_context.Categorys, "Id", "Name", news.CategoryId);
             return View(news);
         }
 
@@ -117,7 +117,7 @@ namespace ProjectNews_ASP.NET_Core_Mvc.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["CategoryId"] = new SelectList(_context.Categorys, "Id", "Id", news.CategoryId);
+            ViewData["CategoryId"] = new SelectList(_context.Categorys, "Id", "Name", news.CategoryId);
             return View(news);
         }
 
