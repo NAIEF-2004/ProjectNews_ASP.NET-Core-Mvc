@@ -11,15 +11,14 @@ namespace ProjectNews_ASP.NET_Core_Mvc
 		{
 
 			var builder = WebApplication.CreateBuilder(args);
-   var connectionString = builder.Configuration.GetConnectionString("ProjectNews_ASPNET_Core_MvcContextConnection") ?? throw new InvalidOperationException("Connection string 'ProjectNews_ASPNET_Core_MvcContextConnection' not found.");
+
 
 			 
 
 			// Add services to the container.
 
 			builder.Services.AddControllersWithViews();
-            
-            builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true).AddEntityFrameworkStores<ProjectNews_ASPNET_Core_MvcContext>();
+
 
             
             builder.Services.AddDbContext<NewsContext>(options =>
