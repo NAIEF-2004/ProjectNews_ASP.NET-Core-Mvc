@@ -6,6 +6,10 @@
       "type": "mssql.local",
       "connectionId": "mvc",
       "dynamicId": null
+    },
+    "mssql2": {
+      "type": "mssql.local",
+      "connectionId": "ConnectionStrings:ProjectNews_ASPNET_Core_MvcContextConnection"
     }
   }
 }
