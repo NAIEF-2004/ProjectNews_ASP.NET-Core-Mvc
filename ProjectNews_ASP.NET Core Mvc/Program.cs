@@ -19,9 +19,17 @@ namespace ProjectNews_ASP.NET_Core_Mvc
 
 			builder.Services.AddControllersWithViews();
 
+            builder.Services.AddDbContext<ApplicationDbContext>(options =>
+              options.UseSqlServer(builder.Configuration.GetConnectionString("AlternativeConnection")));
 
-            
-            builder.Services.AddDbContext<NewsContext>(options =>
+			builder.Services.AddDefaultIdentity<IdentityUser>()
+			.AddEntityFrameworkStores<ApplicationDbContext>();
+
+			//builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true).AddEntityFrameworkStores<ApplicationDbContext>();
+
+			//builder.Services.AddControllersWithViews();
+
+			builder.Services.AddDbContext<NewsContext>(options =>
 				options.UseSqlServer("Data Source=(localdb)\\ProjectModels;Initial Catalog=ProjectNews_Mvc;Integrated Security=True;"));
 
 			builder.Services.AddControllersWithViews();
@@ -35,8 +43,10 @@ namespace ProjectNews_ASP.NET_Core_Mvc
 				// The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
 				app.UseHsts();
 			}
+            app.UseAuthentication();
+            app.UseAuthorization();
 
-			app.UseHttpsRedirection();
+            app.UseHttpsRedirection();
 			app.UseStaticFiles();
 
 			app.UseRouting();
@@ -46,8 +56,8 @@ namespace ProjectNews_ASP.NET_Core_Mvc
 			app.MapControllerRoute(
 				name: "default",
 				pattern: "{controller=Home}/{action=Index}/{id?}");
-
-			app.Run();
+            app.MapRazorPages();
+            app.Run();
 		}
 	}
 }
