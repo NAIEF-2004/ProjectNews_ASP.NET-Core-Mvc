@@ -7,7 +7,7 @@ namespace ProjectNews_ASP.NET_Core_Mvc.Models
 		public int Id { get; set; }
 		[DisplayName("Title of news")]
 		public string Title { get; set; }
-		public string Image { get; set; }
+		public string? Image { get; set; }
 		public string Topic { get; set; }
 		public DateTime Data { get; set; }
 		public int CategoryId { get; set; }

@@ -46,6 +46,10 @@ namespace ProjectNews_ASP.NET_Core_Mvc.Controllers
           var massages= db.ContactUs.ToList();
             return View(massages);
        
+        } 
+        public IActionResult About() //اضفت هذه الدالة لعرض الرسائل
+        {
+            return View();
         }
         public IActionResult DeleteNews(int id)
         {

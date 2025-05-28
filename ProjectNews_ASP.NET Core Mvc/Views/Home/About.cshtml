@@ -1,0 +1,98 @@
+﻿@{
+    ViewData["Title"] = "من نحن";
+}
+
+<div class="container py-5">
+    <div class="row">
+        <div class="col-lg-8 mx-auto">
+            <div class="text-center mb-5">
+                <h1 class="display-4 fw-bold">من نحن</h1>
+                <div class="divider my-4"></div>
+            </div>
+
+            <div class="about-content">
+                <div class="section mb-5">
+                    <h2 class="h3 mb-4">مرحباً بكم في موقعنا الإخباري</h2>
+                    <p class="lead">
+                        نحن منصة إخبارية رائدة تهدف إلى تقديم أحدث الأخبار والتحليلات بمصداقية وموضوعية.
+                        نسعى لتزويد قرائنا بتغطية شاملة للأحداث المحلية والعالمية.
+                    </p>
+                </div>
+
+                <div class="row g-4 mb-5">
+                    <div class="col-md-6">
+                        <div class="service-card p-4 bg-light rounded-3">
+                            <i class="fas fa-newspaper fa-2x mb-3 text-primary"></i>
+                            <h3 class="h4">تغطية إخبارية شاملة</h3>
+                            <p>نقدم تغطية متكاملة للأخبار في مختلف المجالات السياسية والاقتصادية والرياضية والثقافية</p>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="service-card p-4 bg-light rounded-3">
+                            <i class="fas fa-clock fa-2x mb-3 text-primary"></i>
+                            <h3 class="h4">تحديث مستمر</h3>
+                            <p>نواكب الأحداث لحظة بلحظة ونقدم التحديثات المستمرة على مدار الساعة</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="section mb-5">
+                    <h2 class="h3 mb-4">قيمنا</h2>
+                    <div class="row g-4">
+                        <div class="col-md-4">
+                            <div class="value-item text-center">
+                                <i class="fas fa-check-circle fa-2x mb-3 text-success"></i>
+                                <h4 class="h5">المصداقية</h4>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="value-item text-center">
+                                <i class="fas fa-balance-scale fa-2x mb-3 text-success"></i>
+                                <h4 class="h5">الموضوعية</h4>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="value-item text-center">
+                                <i class="fas fa-heart fa-2x mb-3 text-success"></i>
+                                <h4 class="h5">الشفافية</h4>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="contact-section text-center bg-light p-5 rounded-3">
+                    <h2 class="h3 mb-4">تواصل معنا</h2>
+                    <p class="mb-4">نحن هنا للإجابة على استفساراتكم ونرحب بتواصلكم معنا</p>
+                    <a href="/Home/Contact" class="btn btn-primary">راسلنا</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    .divider {
+        height: 4px;
+        width: 70px;
+        background-color: var(--bs-primary);
+        margin: 0 auto;
+    }
+
+    .service-card {
+        transition: transform 0.3s ease;
+    }
+
+        .service-card:hover {
+            transform: translateY(-5px);
+        }
+
+    .value-item {
+        padding: 20px;
+        border-radius: 8px;
+        transition: all 0.3s ease;
+    }
+
+        .value-item:hover {
+            background-color: rgba(var(--bs-light-rgb), 0.5);
+        }
+</style>
