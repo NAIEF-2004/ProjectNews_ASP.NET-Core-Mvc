@@ -4,56 +4,113 @@
     ViewData["Title"] = "Index";
 }
 
-<h1>Index</h1>
+@section Scripts {
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <style>
+        .table th {
+            text-align: right;
+        }
 
-<p>
-    <a asp-action="Create" class="btn btn-success">Create New</a>
-</p>
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Title)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Image)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Topic)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Data)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Category)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Title)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Image)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Topic)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Data)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Category.Name)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
-            </td>
-        </tr>
+        .btn-group {
+            direction: ltr;
+        }
+
+        .section-title {
+            margin-bottom: 40px;
+        }
+
+        .card {
+            box-shadow: 0 0 20px rgba(0,0,0,0.1);
+            border-radius: 10px;
+        }
+
+        .table {
+            margin-bottom: 0;
+        }
+
+        .table-dark th {
+            background-color: #343a40;
+            color: white;
+        }
+
+        .btn-sm {
+            margin: 0 2px;
+        }
+    </style>
 }
-    </tbody>
-</table>
+
+<section class="section">
+    <div class="container" data-aos="fade-up">
+        <div class="section-title text-center">
+            <h2>إدارة الأخبار</h2>
+            <p>قم بإضافة وتعديل وحذف الأخبار من هنا</p>
+        </div>
+
+        <div class="row">
+            <center>
+            <div class="col-12 mb-4">
+                <a asp-action="Create" class="btn btn-success">
+                    <i class="fas fa-plus"></i> إضافة خبر جديد
+                </a>
+                </div>
+            </center>
+        </div>
+
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table class="table table-hover table-bordered">
+                                <thead class="table-dark">
+                                    <tr>
+                                        <th>@Html.DisplayNameFor(model => model.Title)</th>
+                                        <th>@Html.DisplayNameFor(model => model.Image)</th>
+                                        <th>@Html.DisplayNameFor(model => model.Topic)</th>
+                                        <th>@Html.DisplayNameFor(model => model.Data)</th>
+                                        <th>التصنيف</th>
+                                        <th>الاجراء</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var item in Model)
+                                    {
+                                        <tr>
+                                            <td>@Html.DisplayFor(modelItem => item.Title)</td>
+                                            <td>
+                                                @if (!string.IsNullOrEmpty(item.Image))
+                                                {
+                                                    <img src="@item.Image" alt="@item.Title" style="max-width: 100px; max-height: 100px;" class="img-thumbnail" />
+                                                }
+                                                else
+                                                {
+                                                    <span>لا توجد صورة</span>
+                                                }
+                                            </td>
+                                            <td>@Html.DisplayFor(modelItem => item.Topic)</td>
+                                            <td>@item.Data.ToString("dd/MM/yyyy")</td>
+                                            <td>@Html.DisplayFor(modelItem => item.Category.Name)</td>
+                                            <td>
+                                                <div class="btn-group" role="group">
+                                                    <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-primary btn-sm">
+                                                        <i class="fas fa-edit"></i> تعديل
+                                                    </a>
+                                                    <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-info btn-sm">
+                                                        <i class="fas fa-info-circle"></i> تفاصيل
+                                                    </a>
+                                                    <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-danger btn-sm">
+                                                        <i class="fas fa-trash"></i> حذف
+                                                    </a>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
