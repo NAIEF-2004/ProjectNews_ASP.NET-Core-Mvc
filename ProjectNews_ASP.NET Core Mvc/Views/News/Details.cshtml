@@ -1,48 +1,78 @@
 ﻿@model ProjectNews_ASP.NET_Core_Mvc.Models.News
 
 @{
-    ViewData["Title"] = "Details";
+    ViewData["Title"] = "Detalias";
 }
 
-<h1>Details</h1>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+<style>
+    .section-title {
+        margin-bottom: 40px;
+    }
 
-<div>
-    <h4>News</h4>
-    <hr />
-    <dl class="row">
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Title)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Title)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Image)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Image)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Topic)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Topic)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Data)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Data)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Category)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Category.Id)
-        </dd>
-    </dl>
-</div>
-<div>
-    <a asp-action="Edit" asp-route-id="@Model?.Id">Edit</a> |
-    <a asp-action="Index">Back to List</a>
-</div>
+    .card {
+        box-shadow: 0 0 20px rgba(0,0,0,0.1);
+        border-radius: 10px;
+    }
+
+    .news-image {
+        max-width: 100%;
+        height: auto;
+        border-radius: 10px;
+        margin-bottom: 20px;
+    }
+
+    .news-details dt {
+        font-weight: 600;
+        margin-bottom: 0.5rem;
+    }
+
+    .news-details dd {
+        margin-bottom: 1.5rem;
+    }
+</style>
+
+<section class="section">
+    <div class="container" data-aos="fade-up">
+        <div class="section-title text-center">
+            <h2>تفاصيل الخبر</h2>
+            <p>عرض كافة تفاصيل الخبر</p>
+        </div>
+
+        <div class="row justify-content-center">
+            <div class="col-md-8">
+                <div class="card">
+                    <div class="card-body">
+                        @if (!string.IsNullOrEmpty(Model.Image))
+                        {
+                            <img src="@Model.Image" alt="@Model.Title" class="news-image" />
+                        }
+
+                        <dl class="row news-details">
+                            <dt class="col-sm-3">عنوان الخبر</dt>
+                            <dd class="col-sm-9">@Model.Title</dd>
+
+                            <dt class="col-sm-3">موضوع الخبر</dt>
+                            <dd class="col-sm-9">@Model.Topic</dd>
+
+                            <dt class="col-sm-3">تاريخ الخبر</dt>
+                            <dd class="col-sm-9">@Model.Data.ToString("dd/MM/yyyy")</dd>
+
+                            <dt class="col-sm-3">التصنيف</dt>
+                            <dd class="col-sm-9">@Model.Category?.Name</dd>
+                        </dl>
+
+                        <div class="text-center mt-4">
+                            <a asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-primary">
+                                <i class="fas fa-edit"></i> تعديل
+                            </a>
+                            <a asp-action="Index" class="btn btn-secondary">
+                                <i class="fas fa-arrow-right"></i> العودة للقائمة
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

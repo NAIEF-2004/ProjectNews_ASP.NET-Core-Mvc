@@ -4,48 +4,135 @@
     ViewData["Title"] = "Create";
 }
 
-<div class="container">
-<h1>Create</h1>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+<style>
+    .section-title {
+        margin-bottom: 40px;
+    }
 
-<h4>News</h4>
-<hr />
-<div class="row">
-    <div class="col-md-4">
-        <form asp-action="Create">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group">
-                <label asp-for="Title" class="control-label"></label>
-                <input asp-for="Title" class="form-control" />
-                <span asp-validation-for="Title" class="text-danger"></span>
+    .card {
+        box-shadow: 0 0 20px rgba(0,0,0,0.1);
+        border-radius: 10px;
+    }
+
+    .form-group {
+        margin-bottom: 1.5rem;
+    }
+
+    .control-label {
+        font-weight: 600;
+        margin-bottom: 0.5rem;
+    }
+
+    .text-danger {
+        font-size: 0.875rem;
+    }
+
+    .btn-group {
+        direction: ltr;
+    }
+
+    textarea.form-control {
+        min-height: 150px;
+    }
+
+    .form-control {
+        border-radius: 5px;
+        border: 1px solid #ddd;
+        padding: 0.75rem;
+    }
+
+        .form-control:focus {
+            border-color: #80bdff;
+            box-shadow: 0 0 0 0.2rem rgba(0,123,255,.25);
+        }
+</style>
+
+<section class="section">
+    <div class="container" data-aos="fade-up">
+        <div class="section-title text-center">
+            <h2>إضافة خبر جديد</h2>
+            <p>قم بإدخال تفاصيل الخبر في النموذج أدناه</p>
+        </div>
+
+        <div class="row justify-content-center">
+            <div class="col-md-8">
+                <div class="card">
+                    <div class="card-body">
+                        <form asp-action="Create" enctype="multipart/form-data">
+                            <div asp-validation-summary="ModelOnly" class="alert alert-danger" role="alert"></div>
+
+                            <div class="form-group">
+                                <label asp-for="Title" class="control-label">عنوان الخبر</label>
+                                <input asp-for="Title" class="form-control" placeholder="أدخل عنوان الخبر" />
+                                <span asp-validation-for="Title" class="text-danger"></span>
+                            </div>
+
+                            <div class="form-group">
+                                <label asp-for="ImageFile" class="control-label">صورة الخبر</label>
+                                <div class="custom-file">
+                                    <input asp-for="ImageFile" type="file" class="form-control" accept="image/*" />
+                                    <span asp-validation-for="ImageFile" class="text-danger"></span>
+                                </div>
+                                <div id="imagePreviewContainer"></div>
+                            </div>
+
+                            <div class="form-group">
+                                <label asp-for="Topic" class="control-label">موضوع الخبر</label>
+                                <textarea asp-for="Topic" class="form-control" rows="5" placeholder="أدخل تفاصيل الخبر"></textarea>
+                                <span asp-validation-for="Topic" class="text-danger"></span>
+                            </div>
+
+                            <div class="form-group">
+                                <label asp-for="Data" class="control-label">تاريخ الخبر</label>
+                                <input asp-for="Data" type="date" class="form-control" />
+                                <span asp-validation-for="Data" class="text-danger"></span>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="control-label">تصنيف الخبر</label>
+                                <select asp-for="CategoryId" class="form-control" asp-items="ViewBag.CategoryId">
+                                    <option value="">-- اختر التصنيف --</option>
+                                </select>
+                                <span asp-validation-for="CategoryId" class="text-danger"></span>
+                            </div>
+
+                            <div class="form-group text-center mt-4">
+                                <button type="submit" class="btn btn-primary">
+                                    <i class="fas fa-save"></i> حفظ الخبر
+                                </button>
+                                <a asp-action="Index" class="btn btn-secondary">
+                                    <i class="fas fa-arrow-right"></i> العودة للقائمة
+                                </a>
+                            </div>
+                        </form>
+                    </div>
+                </div>
             </div>
-            <div class="form-group">
-                <label asp-for="Image" class="control-label"></label>
-                <input asp-for="Image" type="file" class="form-control" />
-                <span asp-validation-for="Image" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Topic" class="control-label"></label>
-                <textarea asp-for="Topic" class="form-control">
-                    </textarea>
-                <span asp-validation-for="Topic" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Data" class="control-label"></label>
-                <input asp-for="Data" type="date" class="form-control" />
-                <span asp-validation-for="Data" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label  class="control-label">Category</label>
-                <select asp-for="CategoryId" class ="form-control" asp-items="ViewBag.CategoryId"></select>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary" />
-            </div>
-        </form>
+        </div>
     </div>
-</div>
+</section>
 
-<div>
-    <a asp-action="Index">Back to List</a>
-</div>
-</div>
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+    <script>
+        // تفعيل معاينة الصورة عند اختيارها
+        document.querySelector('input[type="file"]').addEventListener('change', function(e) {
+            if (this.files && this.files[0]) {
+                var reader = new FileReader();
+                reader.onload = function(e) {
+                    var previewContainer = document.querySelector('#imagePreviewContainer');
+                    previewContainer.innerHTML = ''; // مسح المعاينة السابقة إن وجدت
+                    var img = document.createElement('img');
+                    img.src = e.target.result;
+                    img.className = 'img-thumbnail mt-2';
+                    img.style.maxHeight = '200px';
+                    previewContainer.appendChild(img);
+                }
+                reader.readAsDataURL(this.files[0]);
+            }
+        });
+    </script>
+}
