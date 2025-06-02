@@ -1,38 +1,195 @@
 ﻿@model IEnumerable<ProjectNews_ASP.NET_Core_Mvc.Models.Category>
 
-
-<p>
-    <a asp-action="Create" class="btn btn-success">Create New</a>
-</p>
-
-<table class="table table-bordered table-hover" >
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Name)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Description)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Name)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Description)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-primary">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-secondary">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.Id" class=" btn btn-danger">Delete</a>
-            </td>
-        </tr>
+@{
+    ViewData["Title"] = "Index";
 }
-    </tbody>
-</table>
-    
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+<style>
+    .section-title {
+        margin-bottom: 40px;
+    }
+
+    .card {
+        box-shadow: 0 0 20px rgba(0,0,0,0.1);
+        border-radius: 10px;
+        margin-bottom: 30px;
+    }
+
+    .table {
+        margin-bottom: 0;
+    }
+
+        .table th {
+            background-color: #343a40;
+            color: white;
+            border: none;
+            padding: 15px;
+        }
+
+        .table td {
+            vertical-align: middle;
+            padding: 15px;
+        }
+
+    .btn-group .btn {
+        margin: 0 3px;
+        border-radius: 5px;
+    }
+
+    .btn-success {
+        background-color: #28a745;
+        border-color: #28a745;
+        padding: 10px 20px;
+        font-weight: 500;
+        transition: all 0.3s ease;
+    }
+
+        .btn-success:hover {
+            background-color: #218838;
+            border-color: #1e7e34;
+            transform: translateY(-2px);
+        }
+
+    .btn-primary, .btn-secondary, .btn-danger {
+        padding: 8px 16px;
+        transition: all 0.3s ease;
+    }
+
+        .btn-primary:hover, .btn-secondary:hover, .btn-danger:hover {
+            transform: translateY(-2px);
+        }
+
+    .category-description {
+        max-width: 300px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+
+    .empty-message {
+        text-align: center;
+        padding: 20px;
+        color: #666;
+        font-style: italic;
+    }
+
+    .add-category-button {
+        margin-bottom: 20px;
+    }
+
+    /* تحسين مظهر الجدول للشاشات الصغيرة */
+    @@media (max-width: 768px) {
+        .table-responsive {
+            border: 0;
+        }
+
+        .btn-group {
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+        }
+
+            .btn-group .btn {
+                width: 100%;
+                margin: 0;
+            }
+
+        .category-description {
+            max-width: 150px;
+        }
+    }
+</style>
+
+<section class="section">
+    <div class="container" data-aos="fade-up">
+        <div class="section-title text-center">
+            <h2>إدارة التصنيفات</h2>
+            <p>قم بإضافة وتعديل وحذف تصنيفات الأخبار</p>
+        </div>
+
+        <div class="row">
+            <div class="col-12 add-category-button text-center">
+                <a asp-action="Create" class="btn btn-success">
+                    <i class="fas fa-plus"></i> إضافة تصنيف جديد
+                </a>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table table-hover">
+                        <thead>
+                            <tr>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.Name)
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.Description)
+                                </th>
+                                <th>الإجراءات</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @if (Model.Any())
+                            {
+                                @foreach (var item in Model)
+                                {
+                                    <tr>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.Name)
+                                        </td>
+                                        <td>
+                                            <div class="category-description" title="@item.Description">
+                                                @Html.DisplayFor(modelItem => item.Description)
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="btn-group" role="group">
+                                                <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-primary">
+                                                    <i class="fas fa-edit"></i> تعديل
+                                                </a>
+                                                <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-secondary">
+                                                    <i class="fas fa-info-circle"></i> تفاصيل
+                                                </a>
+                                                <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-danger">
+                                                    <i class="fas fa-trash"></i> حذف
+                                                </a>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                }
+                            }
+                            else
+                            {
+                                <tr>
+                                    <td colspan="3" class="empty-message">
+                                        <i class="fas fa-info-circle"></i> لا توجد تصنيفات مضافة حتى الآن
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+@section Scripts {
+    <script>
+        // إضافة تلميح عند تمرير الماوس فوق الوصف المختصر
+        $(document).ready(function() {
+            $('.category-description').each(function() {
+                var fullText = $(this).attr('title');
+                if (this.offsetWidth < this.scrollWidth) {
+                    $(this).tooltip({
+                        placement: 'top',
+                        title: fullText
+                    });
+                }
+            });
+        });
+    </script>
+}

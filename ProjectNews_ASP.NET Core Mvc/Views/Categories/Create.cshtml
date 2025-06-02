@@ -4,32 +4,137 @@
     ViewData["Title"] = "Create";
 }
 
-<h1>Create</h1>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+<style>
+    .section-title {
+        margin-bottom: 40px;
+    }
 
-<h4>Category</h4>
-<hr />
-<div class="row">
-    <div class="col-md-4">
-        <form asp-action="Create">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group">
-                <label asp-for="Name" class="control-label"></label>
-                <input asp-for="Name" class="form-control" />
-                <span asp-validation-for="Name" class="text-danger"></span>
+    .card {
+        box-shadow: 0 0 20px rgba(0,0,0,0.1);
+        border-radius: 10px;
+    }
+
+    .form-group {
+        margin-bottom: 1.5rem;
+    }
+
+    .control-label {
+        font-weight: 600;
+        margin-bottom: 0.5rem;
+        color: #495057;
+    }
+
+    .form-control {
+        border-radius: 5px;
+        border: 1px solid #ddd;
+        padding: 0.75rem;
+        transition: all 0.3s ease;
+    }
+
+        .form-control:focus {
+            border-color: #80bdff;
+            box-shadow: 0 0 0 0.2rem rgba(0,123,255,.25);
+        }
+
+    .text-danger {
+        font-size: 0.875rem;
+        margin-top: 0.25rem;
+    }
+
+    .btn {
+        padding: 10px 20px;
+        transition: all 0.3s ease;
+    }
+
+        .btn:hover {
+            transform: translateY(-2px);
+        }
+
+    .alert {
+        border-radius: 8px;
+        margin-bottom: 1.5rem;
+    }
+
+    textarea.form-control {
+        min-height: 120px;
+        resize: vertical;
+    }
+    /* تحسين المظهر في الشاشات الصغيرة */
+    @@media (max-width: 768px) {
+        .btn {
+            width: 100%;
+            margin-bottom: 0.5rem;
+        }
+    }
+</style>
+
+<section class="section">
+    <div class="container" data-aos="fade-up">
+        <div class="section-title text-center">
+            <h2>إضافة تصنيف جديد</h2>
+            <p>قم بإدخال بيانات التصنيف الجديد</p>
+        </div>
+
+        <div class="row justify-content-center">
+            <div class="col-md-8">
+                <div class="card">
+                    <div class="card-body">
+                        <form asp-action="Create">
+                            <div asp-validation-summary="ModelOnly" class="alert alert-danger" role="alert"></div>
+
+                            <div class="form-group">
+                                <label asp-for="Name" class="control-label">اسم التصنيف</label>
+                                <input asp-for="Name" class="form-control" placeholder="أدخل اسم التصنيف" />
+                                <span asp-validation-for="Name" class="text-danger"></span>
+                            </div>
+
+                            <div class="form-group">
+                                <label asp-for="Description" class="control-label">وصف التصنيف</label>
+                                <textarea asp-for="Description" class="form-control"
+                                          placeholder="أدخل وصفاً مختصراً للتصنيف" rows="4"></textarea>
+                                <span asp-validation-for="Description" class="text-danger"></span>
+                            </div>
+
+                            <div class="form-group text-center mt-4">
+                                <button type="submit" class="btn btn-primary">
+                                    <i class="fas fa-plus-circle"></i> إضافة التصنيف
+                                </button>
+                                <a asp-action="Index" class="btn btn-secondary">
+                                    <i class="fas fa-arrow-right"></i> العودة للقائمة
+                                </a>
+                            </div>
+                        </form>
+                    </div>
+                </div>
             </div>
-            <div class="form-group">
-                <label asp-for="Description" class="control-label"></label>
-                <input asp-for="Description" class="form-control" />
-                <span asp-validation-for="Description" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary" />
-            </div>
-        </form>
+        </div>
     </div>
-</div>
+</section>
 
-<div>
-    <a asp-action="Index">Back to List</a>
-</div>
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+    <script>
+        // تحسين تجربة المستخدم في النموذج
+        $(document).ready(function() {
+            // إضافة تأثير عند التركيز على الحقول
+            $('.form-control').focus(function() {
+                $(this).closest('.form-group').addClass('focused');
+            }).blur(function() {
+                $(this).closest('.form-group').removeClass('focused');
+            });
 
+            // تحقق من التحقق من الصحة في الوقت الفعلي
+            $('form').on('submit', function() {
+                if ($(this).valid()) {
+                    // إظهار مؤشر التحميل عند الإرسال
+                    $(this).find('button[type="submit"]')
+                        .html('<i class="fas fa-spinner fa-spin"></i> جاري الإضافة...')
+                        .prop('disabled', true);
+                }
+            });
+        });
+    </script>
+}

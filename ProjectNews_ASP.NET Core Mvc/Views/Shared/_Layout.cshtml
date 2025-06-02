@@ -1,142 +1,158 @@
-﻿<!DOCTYPE html>
+﻿@{
+    Layout = null;
+}
+<!DOCTYPE html>
 <html lang="en">
 
 <head>
-    <meta charset="utf-8"> 
-    <meta content="width=device-width, initial-scale=1.0" name="viewport"> 
-    <title>Trending News Website </title>
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <title>Trending News Website</title>
     <meta name="description" content="">
     <meta name="keywords" content="">
 
     <!-- Favicons -->
-       <link href="~/assets/img/favicon.jpg" rel="icon">
-    <link href="~/assets/img/apple-touch-icon.png" rel="apple-touch-icon"> 
-
+    <link href="@(Url.Content("~/assets/img/favicon.jpg"))" rel="icon">
+    <link href="@(Url.Content("~/assets/img/apple-touch-icon.png"))" rel="apple-touch-icon">
+    @await RenderSectionAsync("Styles", required: false)
     <!-- Fonts -->
     <link href="https://fonts.googleapis.com" rel="preconnect">
     <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Raleway:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;400;500;700;900&family=Poppins:wght@100;200;300;400;500;600;700;800;900&family=Raleway:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
 
     <!-- Vendor CSS Files -->
-    <link href="~/assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet"> 
-     <link href="~/assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
-    <link href="~/assets/vendor/aos/aos.css" rel="stylesheet">
-    <link href="~/assets/vendor/fontawesome-free/css/all.min.css" rel="stylesheet">
-    <link href="~/assets/vendor/glightbox/css/glightbox.min.css" rel="stylesheet">
-    <link href="~/assets/vendor/swiper/swiper-bundle.min.css" rel="stylesheet">
+    <link href="@(Url.Content("~/assets/vendor/bootstrap/css/bootstrap.min.css"))" rel="stylesheet">
+    <link href="@(Url.Content("~/assets/vendor/bootstrap-icons/bootstrap-icons.css"))" rel="stylesheet">
+    <link href="@(Url.Content("~/assets/vendor/aos/aos.css"))" rel="stylesheet">
+    <link href="@(Url.Content("~/assets/vendor/fontawesome-free/css/all.min.css"))" rel="stylesheet">
+    <link href="@(Url.Content("~/assets/vendor/glightbox/css/glightbox.min.css"))" rel="stylesheet">
+    <link href="@(Url.Content("~/assets/vendor/swiper/swiper-bundle.min.css"))" rel="stylesheet">
 
     <!-- Main CSS File -->
-    <link href="~/assets/css/main.css" rel="stylesheet">
-
-    <!-- =======================================================
-    * Template Name: TrendingNews
-    * Template URL: https://bootstrapmade.com/TrendingNews-free-bootstrap-theme/
-    * Updated: Aug 07 2024 with Bootstrap v5.3.3
-    * Author: BootstrapMade.com
-    * License: https://bootstrapmade.com/license/
-    ======================================================== -->
+    <link href="@(Url.Content("~/assets/css/main.css"))" rel="stylesheet">
 </head>
 
 <body class="index-page">
 
     <header id="header" class="header sticky-top">
-
         <div class="topbar d-flex align-items-center">
             <div class="container d-flex justify-content-center justify-content-md-between">
                 <div class="d-none d-md-flex align-items-center">
-                    <i class="bi bi-clock me-1"></i> @DateTime.Now
+                    <i class="bi bi-clock me-1"></i> @DateTime.Now.ToString("dd MMM yyyy HH:mm")
                 </div>
                 <div class="d-flex align-items-center">
                     <i class="bi bi-phone me-1"></i> Call us now +352 681 547 589
                 </div>
             </div>
-        </div><!-- End Top Bar -->
+        </div>
 
         <div class="branding d-flex align-items-center">
-
-            <div class="container position-relative d-flex align-items-center justify-content-end">
-                <a href="~/Home/index" class="logo d-flex align-items-center me-auto">
-                    <img src="~/assets/img/logo.jpg" alt="">
-                    <!-- Uncomment the line below if you also wish to use a text logo -->
-                    <!-- <h1 class="sitename">TrendingNews</h1>  -->
+            <div class="container position-relative d-flex align-items-center justify-content-between">
+                <a asp-controller="Home" asp-action="Index" class="logo d-flex align-items-center">
+                    <img src="@(Url.Content("~/assets/img/logo.jpg"))" alt="">
                 </a>
+
+                <div class="search-form-container mx-auto">
+                    <form method="get" asp-controller="Home" asp-action="News" class="d-flex">
+                        <div class="input-group">
+                            <input type="text" name="searchTerm" class="form-control" placeholder="ابحث عن خبر..." style="min-width: 200px;">
+                            <select name="id" class="form-select" style="max-width: 150px;">
+                                <option value="">كل التصنيفات</option>
+                                @if (ViewBag.Categories != null)
+                                {
+                                    foreach (var category in ViewBag.Categories)
+                                    {
+                                        <option value="@category.Id">@category.Name</option>
+                                    }
+                                }
+                            </select>
+                            <button type="submit" class="btn btn-primary">
+                                <i class="fas fa-search"></i>
+                            </button>
+                        </div>
+                    </form>
+                </div>
 
                 <nav id="navmenu" class="navmenu">
                     <ul>
-                        <li class="active"><a href="/Home/index" >Home</a></li>
-                        <li><a href="/Home/About">About</a></li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-controller="Home" asp-action="Contact">Contact</a>
+                        <li>
+                            <a asp-controller="Home" asp-action="Index" class="@(ViewContext.RouteData.Values["Action"]?.ToString() == "Index" && ViewContext.RouteData.Values["Controller"]?.ToString() == "Home" ? "active" : "")">Home</a>
                         </li>
-                        <li><a href="/News">News Card</a></li>
-                        <li><a href="/Categories">categories</a></li>
-                        <li><a href="/home/Massages">Show Massages</a></li>
-                
-                        <partial name="_LoginPartial" /> @*احضرت كامل الملف *@
+                        <li>
+                            <a asp-controller="Home" asp-action="About" class="@(ViewContext.RouteData.Values["Action"]?.ToString() == "About" ? "active" : "")">About</a>
+                        </li>
+                        <li>
+                            <a asp-controller="Home" asp-action="Contact" class="@(ViewContext.RouteData.Values["Action"]?.ToString() == "Contact" ? "active" : "")">Contact</a>
+                        </li>
+                        <li>
+                            <a asp-controller="News" asp-action="Index" class="@(ViewContext.RouteData.Values["Controller"]?.ToString() == "News" ? "active" : "")">News Card</a>
+                        </li>
+                        <li>
+                            <a asp-controller="Categories" asp-action="Index" class="@(ViewContext.RouteData.Values["Controller"]?.ToString() == "Categories" ? "active" : "")">Categories</a>
+                        </li>
+                        <li>
+                            <a asp-controller="Home" asp-action="Massages" class="@(ViewContext.RouteData.Values["Action"]?.ToString() == "Massages" ? "active" : "")">Show Massages</a>
+                        </li>
+                        <li>
+                            <partial name="_LoginPartial" />
+                        </li>
                     </ul>
-                   <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
+                    <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
                 </nav>
-                
-                @*<a class="cta-btn" href="index.html#appointment">Make an Appointment</a>*@
-
             </div>
-
         </div>
-
     </header>
 
     <main class="main">
+        
+            <!-- Hero Section -->
+            <section id="hero" class="hero section">
+                <div id="hero-carousel" class="carousel slide carousel-fade" data-bs-ride="carousel" data-bs-interval="5000">
 
-        <!-- Hero Section -->
-        <section id="hero" class="hero section">
-
-            <div id="hero-carousel" class="carousel slide carousel-fade" data-bs-ride="carousel" data-bs-interval="5000">
-
-                <div class="carousel-item active">
-                    <img src="~/assets/img/hero-carousel/A.jpg" alt="">
-                    <div class="container">
-                        <h2>Welcome to Trending</h2>
-                        <p>اهلا وسهلا بكم في موقعنا لنشرات الاخبار تجدون هنا اصدق الاخبار من المصادر الموثوقة والمصدقة صوت الحرية هنا والاخبار العاجلة هنا بدون اي تعديل من المصدر</p>
-                        <a href="#about" class="btn-get-started">Read More</a>
+                    <div class="carousel-item active">
+                        <img src="@(Url.Content("~/assets/img/hero-carousel/A.jpg"))" alt="">
+                        <div class="container">
+                            <h2>Welcome to Trending</h2>
+                            <p>اهلا وسهلا بكم في موقعنا لنشرات الاخبار...</p>
+                            <a href="/Home/About" class="btn-get-started">Read More</a>
+                        </div>
                     </div>
-                </div><!-- End Carousel Item -->
 
-                <div class="carousel-item">
-                    <img src="~/assets/img/hero-carousel/B.jpg" alt="">
-                    <div class="container">
-                        <h2>Moment By Moment</h2>
-                        <p>نتميز بالاخبار السريعة والعاجلة لحظة بلحظة لتكون دائما على اطلاع بما يجري من حولك</p>
-                        <a href="#about" class="btn-get-started">Read More</a>
+                    <div class="carousel-item">
+                        <img src="@(Url.Content("~/assets/img/hero-carousel/B.jpg"))" alt="">
+                        <div class="container">
+                            <h2>Moment By Moment</h2>
+                            <p>نتميز بالاخبار السريعة والعاجلة لحظة بلحظة...</p>
+                            <a href="#about" class="btn-get-started">Read More</a>
+                        </div>
                     </div>
-                </div><!-- End Carousel Item -->
 
-                <div class="carousel-item">
-                    <img src="~/assets/img/hero-carousel/C.jpg" alt="">
-                    <div class="container">
-                        <h2>Political, economic and security news</h2>
-                        <p>نقدم لكم الاخبار السياسية والاقتصادية والامنية لكونكم جزء لا يتجزأ في هذا المجتمع بعد اطلاعكم على الاخبار يمكنكم المشاركة في حل مشاكل مجتمعكم</p>
-                        <a href="#about" class="btn-get-started">Read More</a>
+                    <div class="carousel-item">
+                        <img src="@(Url.Content("~/assets/img/hero-carousel/C.jpg"))" alt="">
+                        <div class="container">
+                            <h2>Political, economic and security news</h2>
+                            <p>نقدم لكم الاخبار السياسية والاقتصادية...</p>
+                            <a href="#about" class="btn-get-started">Read More</a>
+                        </div>
                     </div>
-                </div><!-- End Carousel Item -->
 
-                <a class="carousel-control-prev" href="#hero-carousel" role="button" data-bs-slide="prev">
-                    <span class="carousel-control-prev-icon bi bi-chevron-left" aria-hidden="true"></span>
-                </a>
+                    <a class="carousel-control-prev" href="#hero-carousel" role="button" data-bs-slide="prev">
+                        <span class="carousel-control-prev-icon bi bi-chevron-left" aria-hidden="true"></span>
+                    </a>
+                    <a class="carousel-control-next" href="#hero-carousel" role="button" data-bs-slide="next">
+                        <span class="carousel-control-next-icon bi bi-chevron-right" aria-hidden="true"></span>
+                    </a>
 
-                <a class="carousel-control-next" href="#hero-carousel" role="button" data-bs-slide="next">
-                    <span class="carousel-control-next-icon bi bi-chevron-right" aria-hidden="true"></span>
-                </a>
+                    <ol class="carousel-indicators"></ol>
+                </div>
+            </section>
 
-                <ol class="carousel-indicators"></ol>
-
-            </div>
-        </section>
             @RenderBody()
+        </main>
 
-    </main>
+   
 
     <footer id="footer" class="footer light-background">
-
         <div class="container footer-top text-center">
             <p>© <span>Copyright</span> <strong class="px-1 sitename">Trending</strong> <span>All Rights Reserved</span></p>
             <div class="credits">
@@ -144,16 +160,13 @@
             </div>
         </div>
 
-        <!-- social icons centered at bottom -->
         <div class="social-fixed-bottom d-flex justify-content-center mt-3">
-            <a href="" class="mx-2"><i class="bi bi-twitter-x"></i></a>
-            <a href="https://www.facebook.com/share/159rjwCrti/ " class="mx-2"><i class="bi bi-facebook"></i></a>
-            <a href="https://www.instagram.com/naief_hamide?igsh=MXJ1eHUyZzM5NzVndQ== " class="mx-2"><i class="bi bi-instagram"></i></a>
-            <a href="https://www.linkedin.com/in/naief-hamiade-530924308?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app " class="mx-2"><i class="bi bi-linkedin"></i></a>
+            <a href="#" class="mx-2"><i class="bi bi-twitter-x"></i></a>
+            <a href="https://www.facebook.com/share/159rjwCrti/" class="mx-2"><i class="bi bi-facebook"></i></a>
+            <a href="https://www.instagram.com/naief_hamide" class="mx-2"><i class="bi bi-instagram"></i></a>
+            <a href="https://www.linkedin.com/in/naief-hamiade-530924308" class="mx-2"><i class="bi bi-linkedin"></i></a>
         </div>
-
     </footer>
-
 
     <!-- Scroll Top -->
     <a href="#" id="scroll-top" class="scroll-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
@@ -162,21 +175,16 @@
     <div id="preloader"></div>
 
     <!-- Vendor JS Files -->
-    <script src="~/assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-    <script src="~/assets/vendor/php-email-form/validate.js"></script>
-    <script src="~/assets/vendor/aos/aos.js"></script>
-    <script src="~/assets/vendor/glightbox/js/glightbox.min.js"></script>
-    <script src="~/assets/vendor/purecounter/purecounter_vanilla.js"></script>
-    <script src="~/assets/vendor/swiper/swiper-bundle.min.js"></script>
-
-
+    <script src="@(Url.Content("~/assets/vendor/bootstrap/js/bootstrap.bundle.min.js"))"></script>
+    <script src="@(Url.Content("~/assets/vendor/php-email-form/validate.js"))"></script>
+    <script src="@(Url.Content("~/assets/vendor/aos/aos.js"))"></script>
+    <script src="@(Url.Content("~/assets/vendor/glightbox/js/glightbox.min.js"))"></script>
+    <script src="@(Url.Content("~/assets/vendor/purecounter/purecounter_vanilla.js"))"></script>
+    <script src="@(Url.Content("~/assets/vendor/swiper/swiper-bundle.min.js"))"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <!-- Main JS File -->
-    <script src="~/assets/js/main.js"></script>
+    <script src="@(Url.Content("~/assets/js/main.js"))"></script>
 
-    <!-- Render Scripts Section -->
     @await RenderSectionAsync("Scripts", required: false)
-
 </body>
-
 </html>
-
