@@ -1,42 +1,197 @@
 ﻿@model List<News>
-<section id="about" class="about section">
 
-    <!-- Section Title -->
-    <div class="container section-title aos-init aos-animate" data-aos="fade-up">
-        <h2>الأخبار @ViewData["CategoryName"]<br></h2>
-      
-    </div><!-- End Section Title -->
-
-    <div class="container">
-        
-        <center>        
-            @foreach (var item in Model)
-            {
-                <div class="row gy-4" style="margin:300px">
-                <div class=" col-12">
-                    <img src="~/assets/img/about.jpg" class="img-fluid" style="height:200;width:200 ;border-radius:50%" alt="">
-                  
-                </div>
-                <div class="col-sm-12">
-                    <h3>@item.Title</h3>
-                    <h4>@item.Data</h4>
-                <p class="fst-italic">
-                  @item.Topic
-                </p>
-               
-               
-            </div>
-
-                </div>
-                <center>
-                    <a class="btn btn-danger" href="/Home/DeleteNews/@item.Id">Delete</a>
-                </center>
-            <hr />
-            }
-       
-        </center>
-        
-
+<div class="container mt-4">
+    <div class="section-header">
+        @if (!string.IsNullOrEmpty(ViewBag.CategoryName))
+        {
+            <h2>أخبار @ViewBag.CategoryName</h2>
+        }
+        else if (!string.IsNullOrEmpty(ViewBag.SearchTerm))
+        {
+            <h2>نتائج البحث عن: @ViewBag.SearchTerm</h2>
+        }
+        else
+        {
+            <h2>جميع الأخبار</h2>
+        }
     </div>
 
-</section>
+    @if (ViewBag.NoResults == true)
+    {
+        <div class="alert alert-info text-center">
+            <h4><i class="fas fa-info-circle"></i> @ViewBag.Message</h4>
+            <p class="mt-3">
+                <a href="@Url.Action("Index", "Home")" class="btn btn-primary">
+                    <i class="fas fa-home"></i> العودة للصفحة الرئيسية
+                </a>
+            </p>
+        </div>
+    }
+    else
+    {
+        <div class="row">
+            @foreach (var news in Model)
+            {
+                <div class="col-12 mb-4">
+                    <div class="news-item">
+                        <div class="row">
+                            @if (!string.IsNullOrEmpty(news.Image))
+                            {
+                                <div class="col-md-4">
+                                    <div class="news-image">
+                                        <img src="@news.Image" alt="@news.Title">
+                                    </div>
+                                </div>
+                            }
+                            <div class="@(!string.IsNullOrEmpty(news.Image) ? "col-md-8" : "col-12")">
+                                <div class="news-content">
+                                    <div class="news-meta">
+                                        <span class="category">
+                                            <i class="fas fa-folder"></i> @news.Category?.Name
+                                        </span>
+                                        <span class="date">
+                                            <i class="fas fa-calendar"></i> @news.Data.ToString("dd/MM/yyyy")
+                                        </span>
+                                    </div>
+                                    <h3 class="news-title">@news.Title</h3>
+                                    <div class="news-text">
+                                        @news.Topic
+                                    </div>
+                                    @if (User.Identity.IsAuthenticated && User.IsInRole("Admin"))
+                                    {
+                                        <div class="admin-actions mt-3">
+                                            <a href="@Url.Action("DeleteNews", "Home", new { id = news.Id })" 
+                                               class="btn btn-danger" 
+                                               onclick="return confirm('هل أنت متأكد من حذف هذا الخبر؟');">
+                                                <i class="fas fa-trash"></i> حذف الخبر
+                                            </a>
+                                        </div>
+                                    }
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    }
+</div>
+
+@section Styles {
+    <style>
+        .news-item {
+            background: #fff;
+            border-radius: 15px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+            overflow: hidden;
+            transition: transform 0.3s ease;
+        }
+
+        .news-item:hover {
+            transform: translateY(-5px);
+        }
+
+        .news-image {
+            height: 300px;
+            overflow: hidden;
+            border-radius: 15px;
+            margin: 15px;
+        }
+
+        .news-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .news-content {
+            padding: 25px;
+        }
+
+        .news-meta {
+            margin-bottom: 15px;
+            color: #666;
+            font-size: 0.9rem;
+        }
+
+        .news-meta span {
+            margin-left: 20px;
+        }
+
+        .news-meta i {
+            margin-left: 5px;
+            color: var(--accent-color);
+        }
+
+        .news-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 15px;
+            color: var(--heading-color);
+        }
+
+        .news-text {
+            color: #444;
+            line-height: 1.8;
+            font-size: 1.1rem;
+            text-align: justify;
+        }
+
+        .section-header {
+            text-align: center;
+            padding-bottom: 30px;
+        }
+
+        .section-header h2 {
+            font-size: 32px;
+            font-weight: 700;
+            position: relative;
+            margin-bottom: 20px;
+            padding-bottom: 20px;
+            color: var(--heading-color);
+        }
+
+        .section-header h2:after {
+            content: "";
+            position: absolute;
+            display: block;
+            width: 50px;
+            height: 3px;
+            background: var(--accent-color);
+            left: 0;
+            right: 0;
+            bottom: 0;
+            margin: auto;
+        }
+
+        .alert-info {
+            background-color: #e8f4f5;
+            border-color: var(--accent-color);
+            color: var(--accent-color);
+            padding: 30px;
+            border-radius: 10px;
+        }
+
+        .alert-info .btn-primary {
+            background-color: var(--accent-color);
+            border-color: var(--accent-color);
+            transition: all 0.3s ease;
+        }
+
+        .alert-info .btn-primary:hover {
+            background-color: transparent;
+            color: var(--accent-color);
+        }
+
+        .admin-actions .btn-danger {
+            background-color: #dc3545;
+            border-color: #dc3545;
+            transition: all 0.3s ease;
+        }
+
+        .admin-actions .btn-danger:hover {
+            background-color: #c82333;
+            border-color: #bd2130;
+        }
+    </style>
+}

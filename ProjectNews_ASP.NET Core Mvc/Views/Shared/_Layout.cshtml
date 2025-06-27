@@ -47,10 +47,36 @@
         </div>
 
         <div class="branding d-flex align-items-center">
+<<<<<<< HEAD
             <div class="container position-relative d-flex align-items-center justify-content-end">
                 <a asp-controller="Home" asp-action="Index" class="logo d-flex align-items-center me-auto">
+=======
+            <div class="container position-relative d-flex align-items-center justify-content-between">
+                <a asp-controller="Home" asp-action="Index" class="logo d-flex align-items-center">
+>>>>>>> db6e1a2b35d828e962dfef56e3ebcdfa0d62fd37
                     <img src="@(Url.Content("~/assets/img/logo.jpg"))" alt="">
                 </a>
+
+                <div class="search-form-container mx-auto">
+                    <form method="get" asp-controller="Home" asp-action="News" class="d-flex">
+                        <div class="input-group">
+                            <input type="text" name="searchTerm" class="form-control" placeholder="ابحث عن خبر..." style="min-width: 200px;">
+                            <select name="id" class="form-select" style="max-width: 150px;">
+                                <option value="">كل التصنيفات</option>
+                                @if (ViewBag.Categories != null)
+                                {
+                                    foreach (var category in ViewBag.Categories)
+                                    {
+                                        <option value="@category.Id">@category.Name</option>
+                                    }
+                                }
+                            </select>
+                            <button type="submit" class="btn btn-primary">
+                                <i class="fas fa-search"></i>
+                            </button>
+                        </div>
+                    </form>
+                </div>
 
                 <nav id="navmenu" class="navmenu">
                     <ul>
@@ -83,6 +109,7 @@
     </header>
 
     <main class="main">
+<<<<<<< HEAD
         <!-- Hero Section -->
         <section id="hero" class="hero section">
             <div id="hero-carousel" class="carousel slide carousel-fade" data-bs-ride="carousel" data-bs-interval="5000">
@@ -127,6 +154,55 @@
 
         @RenderBody()
     </main>
+=======
+        
+            <!-- Hero Section -->
+            <section id="hero" class="hero section">
+                <div id="hero-carousel" class="carousel slide carousel-fade" data-bs-ride="carousel" data-bs-interval="5000">
+
+                    <div class="carousel-item active">
+                        <img src="@(Url.Content("~/assets/img/hero-carousel/A.jpg"))" alt="">
+                        <div class="container">
+                            <h2>Welcome to Trending</h2>
+                            <p>اهلا وسهلا بكم في موقعنا لنشرات الاخبار...</p>
+                            <a href="/Home/About" class="btn-get-started">Read More</a>
+                        </div>
+                    </div>
+
+                    <div class="carousel-item">
+                        <img src="@(Url.Content("~/assets/img/hero-carousel/B.jpg"))" alt="">
+                        <div class="container">
+                            <h2>Moment By Moment</h2>
+                            <p>نتميز بالاخبار السريعة والعاجلة لحظة بلحظة...</p>
+                            <a href="#about" class="btn-get-started">Read More</a>
+                        </div>
+                    </div>
+
+                    <div class="carousel-item">
+                        <img src="@(Url.Content("~/assets/img/hero-carousel/C.jpg"))" alt="">
+                        <div class="container">
+                            <h2>Political, economic and security news</h2>
+                            <p>نقدم لكم الاخبار السياسية والاقتصادية...</p>
+                            <a href="#about" class="btn-get-started">Read More</a>
+                        </div>
+                    </div>
+
+                    <a class="carousel-control-prev" href="#hero-carousel" role="button" data-bs-slide="prev">
+                        <span class="carousel-control-prev-icon bi bi-chevron-left" aria-hidden="true"></span>
+                    </a>
+                    <a class="carousel-control-next" href="#hero-carousel" role="button" data-bs-slide="next">
+                        <span class="carousel-control-next-icon bi bi-chevron-right" aria-hidden="true"></span>
+                    </a>
+
+                    <ol class="carousel-indicators"></ol>
+                </div>
+            </section>
+
+            @RenderBody()
+        </main>
+
+   
+>>>>>>> db6e1a2b35d828e962dfef56e3ebcdfa0d62fd37
 
     <footer id="footer" class="footer light-background">
         <div class="container footer-top text-center">

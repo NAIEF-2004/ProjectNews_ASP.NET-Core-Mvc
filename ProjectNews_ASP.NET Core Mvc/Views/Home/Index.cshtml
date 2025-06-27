@@ -1,38 +1,76 @@
-﻿@{
-    ViewData["Title"] = "Home Page";
-}
+﻿@model HomeViewModel
 
-@model List<Category>
 <!-- Featured Services Section -->
 <section id="featured-services" class="featured-services section">
-
     <div class="container">
         <div class="row gy-4">
-        @foreach (var item in Model)
-        {
-               
-            <div class="col-xl-3 col-md-6 d-flex" data-aos="fade-up" data-aos-delay="100">
-                    <a href="/Home/News/@item.Id">
-                <div class="service-item position-relative" style="width:100%">
-                    <div class="icon"><i class="fas fa-heartbeat icon"></i></div>
-                            <h4 class="title"><a href="/Home/News/@item.Id" class="stretched-link">@item.Name</a></h4>
-                    <p class="description">@item.Description</p>
-                    
-                       
-                 
-                </div>
+            @foreach (var item in Model.Categories)
+            {
+                <div class="col-xl-3 col-md-6 d-flex" data-aos="fade-up" data-aos-delay="100">
+                    <a href="@Url.Action("News", "Home", new { id = item.Id })">
+                        <div class="service-item position-relative" style="width:100%">
+                            <div class="icon"><i class="fas fa-heartbeat icon"></i></div>
+                            <h4 class="title"><a href="@Url.Action("News", "Home", new { id = item.Id })" class="stretched-link">@item.Name</a></h4>
+                            <p class="description">@item.Description</p>
+                        </div>
                     </a>
-            </div>
-            
-            <!-- End Service Item -->
-        }
+                </div>
+            }
         </div>
-      
-
-
-
-    
-
     </div>
+</section>
 
-</section><!-- /Featured Services Section -->
+@section Styles {
+    <style>
+        .featured-services .service-item {
+            padding: 40px;
+            background: #fff;
+            height: 100%;
+            border-radius: 10px;
+            transition: all 0.5s ease;
+            box-shadow: 0 5px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        .featured-services .service-item:hover {
+            transform: translateY(-10px);
+        }
+
+        .featured-services .service-item .icon {
+            width: 48px;
+            height: 48px;
+            position: relative;
+            margin-bottom: 50px;
+        }
+
+        .featured-services .service-item .icon i {
+            color: var(--accent-color);
+            font-size: 40px;
+            transition: ease-in-out 0.3s;
+            z-index: 2;
+            position: relative;
+            line-height: 1.8;
+        }
+
+        .featured-services .service-item .title {
+            font-weight: 700;
+            margin-bottom: 15px;
+            font-size: 18px;
+        }
+
+        .featured-services .service-item .title a {
+            color: var(--heading-color);
+            transition: ease-in-out 0.3s;
+            text-decoration: none;
+        }
+
+        .featured-services .service-item .title a:hover {
+            color: var(--accent-color);
+        }
+
+        .featured-services .service-item .description {
+            line-height: 24px;
+            font-size: 14px;
+            color: var(--default-color);
+        }
+    </style>
+}
